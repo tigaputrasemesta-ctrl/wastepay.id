@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 255 255 255;
+    --foreground: 15 23 42;
+  }
+  
+  html, body {
+    @apply bg-[#fafaf9] text-slate-900 font-sans antialiased;
+    scroll-behavior: smooth;
+  }
+
+  ::selection {
+    @apply bg-emerald-500 text-white;
+  }
+}
+
+@layer components {
+  .hm-border {
+    @apply border-2 border-black;
+  }
+  
+  .hm-btn {
+    @apply inline-flex items-center justify-center px-6 py-3 bg-white text-black border-2 border-black font-black uppercase tracking-wider hover:bg-black hover:text-white transition-all duration-150 shadow-[4px_4px_0_0_#000] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0_0_#000];
+  }
+  
+  .hm-btn-red {
+    @apply inline-flex items-center justify-center px-6 py-3 bg-red-600 text-white border-2 border-black font-black uppercase tracking-wider hover:bg-black hover:text-white transition-all duration-150 shadow-[4px_4px_0_0_#000] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0_0_#000];
+  }
+  
+  .hm-btn-green {
+    @apply inline-flex items-center justify-center px-6 py-3 bg-emerald-500 text-black border-2 border-black font-black uppercase tracking-wider hover:bg-emerald-400 transition-all duration-150 shadow-[4px_4px_0_0_#000] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0_0_#000];
+  }
+
+  .hm-btn-dark {
+    @apply inline-flex items-center justify-center px-6 py-3 bg-slate-900 text-white border-2 border-black font-black uppercase tracking-wider hover:bg-emerald-500 hover:text-black transition-all duration-150 shadow-[4px_4px_0_0_#000] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0_0_#000];
+  }
+
+  .hm-card {
+    @apply bg-white border-2 border-black p-6 md:p-8 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all;
+  }
+
+  .hm-badge {
+    @apply inline-flex items-center gap-1.5 px-3 py-1 border-2 border-black font-black uppercase text-xs tracking-wider shadow-[2px_2px_0_0_#000];
+  }
+
+  .hm-marquee {
+    @apply w-full border-y-2 border-black py-2.5 overflow-hidden bg-yellow-300 flex whitespace-nowrap items-center select-none;
+  }
+
+  .hm-marquee-content {
+    animation: marquee 25s linear infinite;
+    @apply flex items-center space-x-8 text-black font-black text-xs md:text-sm tracking-widest uppercase;
+  }
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #0f172a;
+  border: 2px solid #f1f5f9;
+}
