@@ -49,12 +49,12 @@ export default function OrderConsultationModal({ isOpen, onClose, defaultPlan }:
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm overflow-y-auto">
-      <div className="relative w-full max-w-xl bg-white border-4 border-black shadow-[12px_12px_0_0_#000] p-6 sm:p-8 my-8">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-2.5 sm:p-4 bg-black/70 backdrop-blur-sm overflow-y-auto">
+      <div className="relative w-full max-w-xl bg-white border-4 border-black shadow-[6px_6px_0_0_#000] sm:shadow-[12px_12px_0_0_#000] p-4 sm:p-8 my-4 sm:my-8 max-h-[92vh] overflow-y-auto">
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-1.5 border-2 border-black bg-slate-100 hover:bg-black hover:text-white transition-colors"
+          className="absolute top-3 right-3 sm:top-4 sm:right-4 p-1.5 border-2 border-black bg-slate-100 hover:bg-black hover:text-white transition-colors"
           aria-label="Tutup Modal"
         >
           <X className="w-5 h-5" />

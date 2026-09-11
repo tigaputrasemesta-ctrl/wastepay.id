@@ -144,16 +144,16 @@ export default function HeroSection({ onOpenOrderModal }: Props) {
 
               {/* Card Body - Dynamic Tab */}
               {activeTab === "fleet" ? (
-                <div className="p-6 space-y-5 bg-[#fcfcfb]">
+                <div className="p-4 sm:p-6 space-y-4 sm:space-y-5 bg-[#fcfcfb]">
                   {/* Visual Map Simulator */}
-                  <div className="relative h-56 bg-emerald-50 border-2 border-black rounded-sm overflow-hidden p-3 flex flex-col justify-between">
-                    <div className="flex items-center justify-between z-10">
-                      <div className="bg-white border-2 border-black px-2 py-0.5 text-[10px] font-black uppercase shadow-[2px_2px_0_0_#000]">
+                  <div className="relative h-56 bg-emerald-50 border-2 border-black rounded-sm overflow-hidden p-2.5 sm:p-3 flex flex-col justify-between">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 z-10">
+                      <div className="bg-white border-2 border-black px-2 py-0.5 text-[9px] sm:text-[10px] font-black uppercase shadow-[2px_2px_0_0_#000] w-fit">
                         Sektor Cilodong - RT 04/RW 03
                       </div>
-                      <div className="bg-emerald-500 text-black border-2 border-black px-2 py-0.5 text-[10px] font-black uppercase flex items-center gap-1 shadow-[2px_2px_0_0_#000]">
+                      <div className="bg-emerald-500 text-black border-2 border-black px-2 py-0.5 text-[9px] sm:text-[10px] font-black uppercase flex items-center gap-1 shadow-[2px_2px_0_0_#000] w-fit">
                         <span className="w-1.5 h-1.5 rounded-full bg-black animate-ping" />
-                        Truk 02 Bergerak (22 km/h)
+                        Truk 02 (22 km/h)
                       </div>
                     </div>
 
@@ -182,77 +182,77 @@ export default function HeroSection({ onOpenOrderModal }: Props) {
 
                     {/* Animated Dump Truck Mascot Overlay */}
                     <div className="z-10 flex items-center justify-center my-auto">
-                      <div className="bg-white/95 border-2 border-black p-2.5 shadow-[4px_4px_0_0_#000] flex items-center gap-3">
-                        <AnimatedDumpTruck size="sm" theme="green" />
-                        <div>
-                          <div className="text-xs font-black text-slate-900">Dump Truck Isuzu Giga (B 9144 T)</div>
-                          <div className="text-[10px] text-slate-600 font-bold">Ritase #2 • Muatan: 2.8 m³ (Organik &amp; Campur)</div>
+                      <div className="bg-white/95 border-2 border-black p-2 sm:p-2.5 shadow-[3px_3px_0_0_#000] flex items-center gap-2 sm:gap-3 max-w-full">
+                        <AnimatedDumpTruck size="sm" theme="green" className="shrink-0" />
+                        <div className="min-w-0">
+                          <div className="text-[11px] sm:text-xs font-black text-slate-900 truncate">Dump Truck Isuzu (B 9144 T)</div>
+                          <div className="text-[9px] sm:text-[10px] text-slate-600 font-bold truncate">Ritase #2 • Muatan: 2.8 m³</div>
                         </div>
                       </div>
                     </div>
 
                     {/* Bottom Status Bar */}
-                    <div className="z-10 flex items-center justify-between text-[10px] font-black uppercase bg-white border border-black px-2 py-1">
-                      <span className="text-emerald-700 font-mono">148 / 160 Titik Diangkut</span>
-                      <span className="text-slate-500 font-mono">ETA Selesai: 11:45 WIB</span>
+                    <div className="z-10 flex items-center justify-between text-[9px] sm:text-[10px] font-black uppercase bg-white border border-black px-2 py-1">
+                      <span className="text-emerald-700 font-mono">148 / 160 Titik</span>
+                      <span className="text-slate-500 font-mono">ETA: 11:45 WIB</span>
                     </div>
                   </div>
 
                   {/* Realtime KPI Mini Grid */}
                   <div className="grid grid-cols-2 gap-3">
                     <div className="bg-white border-2 border-black p-3 shadow-[2px_2px_0_0_#000]">
-                      <div className="text-[10px] font-bold text-slate-500 uppercase">Efisiensi Rute BBM</div>
-                      <div className="text-xl font-black text-emerald-600">+28.4%</div>
-                      <div className="text-[9px] text-slate-600 font-medium">Algoritma Nearest-Neighbor</div>
+                      <div className="text-[9px] sm:text-[10px] font-bold text-slate-500 uppercase">Efisiensi Rute BBM</div>
+                      <div className="text-lg sm:text-xl font-black text-emerald-600">+28.4%</div>
+                      <div className="text-[8px] sm:text-[9px] text-slate-600 font-medium">Algoritma Voronoi</div>
                     </div>
                     <div className="bg-white border-2 border-black p-3 shadow-[2px_2px_0_0_#000]">
-                      <div className="text-[10px] font-bold text-slate-500 uppercase">Kecepatan Komplain</div>
-                      <div className="text-xl font-black text-slate-900">&lt; 45 Menit</div>
-                      <div className="text-[9px] text-slate-600 font-medium">Auto-Dispatch via WhatsApp</div>
+                      <div className="text-[9px] sm:text-[10px] font-bold text-slate-500 uppercase">Respon Komplain</div>
+                      <div className="text-lg sm:text-xl font-black text-slate-900">&lt; 45 Menit</div>
+                      <div className="text-[8px] sm:text-[9px] text-slate-600 font-medium">WhatsApp Dispatch</div>
                     </div>
                   </div>
                 </div>
               ) : (
-                <div className="p-6 space-y-5 bg-[#fcfcfb]">
+                <div className="p-4 sm:p-6 space-y-4 sm:space-y-5 bg-[#fcfcfb]">
                   {/* Financial Flow Card */}
-                  <div className="bg-amber-50 border-2 border-black p-4 space-y-3">
-                    <div className="flex items-center justify-between">
+                  <div className="bg-amber-50 border-2 border-black p-3.5 sm:p-4 space-y-3">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
                       <span className="text-[10px] font-black uppercase text-amber-950">
                         Rekonsiliasi Kas Hari Ini
                       </span>
-                      <span className="px-2 py-0.5 bg-emerald-500 text-black border border-black text-[9px] font-black uppercase">
+                      <span className="px-2 py-0.5 bg-emerald-500 text-black border border-black text-[9px] font-black uppercase w-fit">
                         MATCH 100% (NIHIL SELISIH)
                       </span>
                     </div>
 
                     <div className="grid grid-cols-2 gap-2 pt-1 border-t border-black/20">
                       <div>
-                        <div className="text-[10px] font-bold text-slate-500">Uang Tunai di Laci Kasir:</div>
-                        <div className="text-base font-black text-slate-900">Rp 4.850.000</div>
+                        <div className="text-[9px] sm:text-[10px] font-bold text-slate-500">Tunai Laci Kasir:</div>
+                        <div className="text-sm sm:text-base font-black text-slate-900">Rp 4.850.000</div>
                       </div>
                       <div>
-                        <div className="text-[10px] font-bold text-slate-500">Tercatat Sistem (Tunai):</div>
-                        <div className="text-base font-black text-slate-900">Rp 4.850.000</div>
+                        <div className="text-[9px] sm:text-[10px] font-bold text-slate-500">Tercatat Sistem:</div>
+                        <div className="text-sm sm:text-base font-black text-slate-900">Rp 4.850.000</div>
                       </div>
                     </div>
 
-                    <div className="bg-white border border-black p-2 flex items-center justify-between text-xs">
-                      <span className="font-bold text-slate-700">Online Gateway (Duitku QRIS):</span>
+                    <div className="bg-white border border-black p-2 flex flex-col sm:flex-row sm:items-center justify-between text-xs gap-1">
+                      <span className="font-bold text-slate-700">Online Gateway (Duitku):</span>
                       <span className="font-black text-emerald-600">Rp 12.450.000 (Lunas)</span>
                     </div>
                   </div>
 
                   {/* Summary Metric */}
-                  <div className="bg-slate-900 text-white p-4 border-2 border-black shadow-[3px_3px_0_0_#000] flex items-center justify-between">
+                  <div className="bg-slate-900 text-white p-3.5 sm:p-4 border-2 border-black shadow-[3px_3px_0_0_#000] flex items-center justify-between">
                     <div>
-                      <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                        Total Retribusi Terkumpul Bulan Ini
+                      <div className="text-[9px] sm:text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                        Total Retribusi Bulan Ini
                       </div>
-                      <div className="text-2xl font-black text-emerald-400">Rp 102.400.000</div>
+                      <div className="text-xl sm:text-2xl font-black text-emerald-400 font-mono">Rp 102.400.000</div>
                     </div>
                     <div className="text-right">
-                      <div className="text-[10px] font-bold text-slate-400 uppercase">Collection Rate</div>
-                      <div className="text-xl font-black text-white">96.8%</div>
+                      <div className="text-[9px] sm:text-[10px] font-bold text-slate-400 uppercase">Collection Rate</div>
+                      <div className="text-lg sm:text-xl font-black text-white">96.8%</div>
                     </div>
                   </div>
                 </div>

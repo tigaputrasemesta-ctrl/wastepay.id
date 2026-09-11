@@ -17,8 +17,8 @@ export default function ProposalModal({ isOpen, onClose }: Props) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm overflow-y-auto">
-      <div className="relative w-full max-w-4xl bg-white border-4 border-black shadow-[16px_16px_0_0_#000] p-6 sm:p-10 my-8">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-2.5 sm:p-4 bg-black/75 backdrop-blur-sm overflow-y-auto">
+      <div className="relative w-full max-w-4xl bg-white border-4 border-black shadow-[6px_6px_0_0_#000] sm:shadow-[16px_16px_0_0_#000] p-4 sm:p-10 my-4 sm:my-8 max-h-[92vh] overflow-y-auto">
         {/* Top Floating Actions */}
         <div className="flex items-center justify-between border-b-2 border-black pb-4 mb-6 print:hidden">
           <div className="flex items-center gap-2">

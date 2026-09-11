@@ -153,20 +153,20 @@ export default function InteractiveDemoShowcase() {
             </div>
           </div>
 
-          {/* Tab 1: Admin & Cashier Control Panel */}
+          {/* Tab 1: Admin & Kasir Control Panel */}
           {activeTab === "admin" && (
-            <div className="p-6 md:p-8 space-y-6 bg-slate-50">
+            <div className="p-3.5 sm:p-6 md:p-8 space-y-4 sm:space-y-6 bg-slate-50">
               {/* Header Bar */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white border-2 border-black p-4 shadow-[3px_3px_0_0_#000]">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 bg-white border-2 border-black p-3.5 sm:p-4 shadow-[3px_3px_0_0_#000]">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-emerald-500 border-2 border-black flex items-center justify-center font-black text-black">
+                  <div className="w-9 h-9 sm:w-10 sm:h-10 bg-emerald-500 border-2 border-black flex items-center justify-center font-black text-black shrink-0">
                     WP
                   </div>
                   <div>
-                    <h3 className="font-black text-slate-900 text-lg uppercase tracking-tight">
+                    <h3 className="font-black text-slate-900 text-base sm:text-lg uppercase tracking-tight">
                       UPS HERU • Dashboard Eksekutif
                     </h3>
-                    <p className="text-xs text-slate-500 font-bold">
+                    <p className="text-[11px] sm:text-xs text-slate-500 font-bold">
                       Periode: September 2026 • Wilayah Operasional Kota Depok
                     </p>
                   </div>
@@ -361,28 +361,28 @@ export default function InteractiveDemoShowcase() {
 
           {/* Tab 2: GIS Voronoi & Fleet Map */}
           {activeTab === "peta" && (
-            <div className="p-6 md:p-8 space-y-6 bg-slate-900 text-white">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b-2 border-slate-800 pb-4">
+            <div className="p-3.5 sm:p-6 md:p-8 space-y-4 sm:space-y-6 bg-slate-900 text-white">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 border-b-2 border-slate-800 pb-4">
                 <div>
-                  <h3 className="text-lg font-black uppercase text-emerald-400">
+                  <h3 className="text-base sm:text-lg font-black uppercase text-emerald-400">
                     Sistem GIS Voronoi &amp; Live Tracking Truk
                   </h3>
-                  <p className="text-xs text-slate-400">
+                  <p className="text-[11px] sm:text-xs text-slate-400">
                     Memantau 63 Zonasi RT/RW di Kota Depok &amp; Algoritma Jalur Tercepat (Nearest-Neighbor)
                   </p>
                 </div>
                 <div className="flex items-center gap-3">
-                  <div className="bg-slate-800 px-3 py-1.5 border border-slate-700 text-xs font-mono text-emerald-400 flex items-center gap-2">
+                  <div className="bg-slate-800 px-2.5 sm:px-3 py-1 sm:py-1.5 border border-slate-700 text-[10px] sm:text-xs font-mono text-emerald-400 flex items-center gap-2">
                     <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
-                    GPS Telemetry: -6.424838, 106.832667
+                    GPS: -6.424838, 106.832667
                   </div>
                 </div>
               </div>
 
               {/* Map Canvas Visualizer */}
-              <div className="relative h-96 bg-slate-950 border-2 border-black rounded overflow-hidden flex items-center justify-center">
+              <div className="relative h-72 sm:h-96 bg-slate-950 border-2 border-black rounded overflow-hidden flex items-center justify-center">
                 {/* SVG Route & Voronoi Map */}
-                <svg className="w-full h-full p-4" viewBox="0 0 600 350">
+                <svg className="w-full h-full p-2 sm:p-4" viewBox="0 0 600 350">
                   {/* Voronoi Zones */}
                   <polygon points="50,40 180,30 220,160 110,210 30,130" fill="rgba(16,185,129,0.15)" stroke="#10b981" strokeWidth="2" strokeDasharray="5 5" />
                   <text x="70" y="80" fill="#10b981" fontSize="12" fontWeight="900" fontFamily="monospace">ZONA RT 01 (CILODONG)</text>
@@ -413,26 +413,26 @@ export default function InteractiveDemoShowcase() {
                 </svg>
 
                 {/* Floating Telemetry Info Box */}
-                <div className="absolute top-4 left-4 bg-slate-900/90 border-2 border-black p-3 text-xs shadow-[4px_4px_0_0_#000] space-y-1.5 backdrop-blur-sm">
-                  <div className="text-[10px] font-black uppercase text-emerald-400">STATUS ARMADA #01</div>
-                  <div className="font-bold text-white">Sopir: Pak Herman (Petugas Angkut)</div>
-                  <div className="text-slate-300">Posisi: Jl. Kandang Ayam RT 02</div>
-                  <div className="text-[10px] font-mono text-amber-400">Muatan: 68% • Ritase Ke-2 Menuju TPA</div>
+                <div className="absolute top-2 left-2 sm:top-4 sm:left-4 bg-slate-900/90 border-2 border-black p-2 sm:p-3 text-[10px] sm:text-xs shadow-[2px_2px_0_0_#000] sm:shadow-[4px_4px_0_0_#000] space-y-0.5 sm:space-y-1.5 backdrop-blur-sm max-w-[180px] sm:max-w-none">
+                  <div className="text-[9px] sm:text-[10px] font-black uppercase text-emerald-400">STATUS ARMADA #01</div>
+                  <div className="font-bold text-white truncate">Sopir: Pak Herman</div>
+                  <div className="text-slate-300 truncate">Jl. Kandang Ayam RT 02</div>
+                  <div className="text-[9px] sm:text-[10px] font-mono text-amber-400">Muatan: 68% (TPA)</div>
                 </div>
 
                 {/* Floating Legend */}
-                <div className="absolute bottom-4 right-4 bg-slate-900/90 border border-slate-700 p-2.5 text-[11px] font-bold space-y-1">
-                  <div className="flex items-center gap-2">
-                    <span className="w-3 h-3 rounded-full bg-emerald-500" />
-                    <span>Sudah Diangkut (Hijau)</span>
+                <div className="absolute bottom-2 right-2 sm:bottom-4 sm:right-4 bg-slate-900/90 border border-slate-700 p-2 sm:p-2.5 text-[9px] sm:text-[11px] font-bold space-y-1">
+                  <div className="flex items-center gap-1.5 sm:gap-2">
+                    <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-emerald-500 shrink-0" />
+                    <span>Diangkut</span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <span className="w-3 h-3 rounded-full bg-amber-500" />
-                    <span>Sedang Dikerjakan (Kuning)</span>
+                  <div className="flex items-center gap-1.5 sm:gap-2">
+                    <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-amber-500 shrink-0" />
+                    <span>Proses</span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <span className="w-3 h-3 rounded-full bg-red-500" />
-                    <span>Menunggu Giliran (Merah)</span>
+                  <div className="flex items-center gap-1.5 sm:gap-2">
+                    <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-red-500 shrink-0" />
+                    <span>Menunggu</span>
                   </div>
                 </div>
               </div>
@@ -441,9 +441,9 @@ export default function InteractiveDemoShowcase() {
 
           {/* Tab 3: Driver Mobile Webview App (/m) */}
           {activeTab === "mobile" && (
-            <div className="p-6 md:p-10 bg-slate-200 flex items-center justify-center">
+            <div className="p-3 sm:p-6 md:p-10 bg-slate-200 flex items-center justify-center">
               {/* Smartphone Shell Frame */}
-              <div className="w-full max-w-sm bg-white border-4 border-black rounded-[36px] shadow-[12px_12px_0_0_#000] overflow-hidden">
+              <div className="w-full max-w-[320px] sm:max-w-sm bg-white border-4 border-black rounded-[28px] sm:rounded-[36px] shadow-[6px_6px_0_0_#000] sm:shadow-[12px_12px_0_0_#000] overflow-hidden mx-auto">
                 {/* Phone Speaker & Camera Notch */}
                 <div className="bg-slate-900 h-6 flex items-center justify-center">
                   <div className="w-16 h-3 bg-black rounded-full" />
@@ -544,40 +544,40 @@ export default function InteractiveDemoShowcase() {
 
           {/* Tab 4: Faktur A4 & QRIS Duitku */}
           {activeTab === "invoice" && (
-            <div className="p-6 md:p-10 bg-slate-100 flex flex-col items-center">
-              <div className="w-full max-w-2xl bg-white border-2 border-black p-6 md:p-8 shadow-[6px_6px_0_0_#000]">
+            <div className="p-3.5 sm:p-6 md:p-10 bg-slate-100 flex flex-col items-center">
+              <div className="w-full max-w-2xl bg-white border-2 border-black p-4 sm:p-6 md:p-8 shadow-[3px_3px_0_0_#000] sm:shadow-[6px_6px_0_0_#000]">
                 {/* Invoice Header */}
-                <div className="flex justify-between items-start border-b-2 border-black pb-6">
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b-2 border-black pb-4 sm:pb-6 gap-3">
                   <div>
-                    <div className="text-2xl font-black uppercase text-slate-900 tracking-tighter">
+                    <div className="text-xl sm:text-2xl font-black uppercase text-slate-900 tracking-tighter">
                       WASTEPAY<span className="text-emerald-600">.ID</span>
                     </div>
-                    <div className="text-[11px] text-slate-600 font-bold max-w-xs mt-1">
+                    <div className="text-[10px] sm:text-[11px] text-slate-600 font-bold max-w-xs mt-0.5 sm:mt-1">
                       Faktur Retribusi Pengelolaan Persampahan Resmi Kota Depok • UPS HERU
                     </div>
                   </div>
-                  <div className="text-right">
-                    <div className="bg-black text-white text-xs font-mono font-bold px-2 py-1">
+                  <div className="text-left sm:text-right">
+                    <div className="bg-black text-white text-[11px] sm:text-xs font-mono font-bold px-2 py-1 inline-block">
                       NO: INV/P000014/202609
                     </div>
-                    <div className="text-[11px] text-slate-500 font-bold mt-1">
+                    <div className="text-[10px] sm:text-[11px] text-slate-500 font-bold mt-1">
                       Tgl: 01 September 2026
                     </div>
                   </div>
                 </div>
 
                 {/* Customer Details */}
-                <div className="grid grid-cols-2 gap-4 py-4 text-xs border-b border-black/20">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 py-3 sm:py-4 text-xs border-b border-black/20">
                   <div>
-                    <div className="text-slate-500 font-bold uppercase text-[10px]">Ditujukan Kepada:</div>
-                    <div className="font-black text-slate-900 text-sm">Bpk. Hendra Gunawan</div>
-                    <div className="text-slate-600">Jl. Kandang Ayam No. 42, RT 02/RW 04</div>
-                    <div className="text-slate-600">No. HP: 0812-9844-XXXX</div>
+                    <div className="text-slate-500 font-bold uppercase text-[9px] sm:text-[10px]">Ditujukan Kepada:</div>
+                    <div className="font-black text-slate-900 text-xs sm:text-sm">Bpk. Hendra Gunawan</div>
+                    <div className="text-slate-600 text-[11px]">Jl. Kandang Ayam No. 42, RT 02/RW 04</div>
+                    <div className="text-slate-600 text-[11px]">No. HP: 0812-9844-XXXX</div>
                   </div>
-                  <div className="text-right">
-                    <div className="text-slate-500 font-bold uppercase text-[10px]">Status Pembayaran:</div>
+                  <div className="sm:text-right">
+                    <div className="text-slate-500 font-bold uppercase text-[9px] sm:text-[10px]">Status Pembayaran:</div>
                     <span
-                      className={`inline-block mt-1 px-3 py-1 text-xs font-black uppercase border-2 border-black ${
+                      className={`inline-block mt-1 px-2.5 py-1 text-[11px] sm:text-xs font-black uppercase border-2 border-black ${
                         invoicePaid
                           ? "bg-emerald-500 text-black shadow-[2px_2px_0_0_#000]"
                           : "bg-red-500 text-white shadow-[2px_2px_0_0_#000]"
@@ -589,8 +589,8 @@ export default function InteractiveDemoShowcase() {
                 </div>
 
                 {/* Invoice Table */}
-                <div className="py-4">
-                  <table className="w-full text-xs text-left">
+                <div className="py-4 overflow-x-auto">
+                  <table className="w-full min-w-[280px] text-xs text-left">
                     <thead>
                       <tr className="border-b-2 border-black text-slate-900 font-black uppercase">
                         <th className="py-2">Deskripsi Layanan</th>
@@ -614,9 +614,9 @@ export default function InteractiveDemoShowcase() {
                       </tr>
                     </tbody>
                     <tfoot>
-                      <tr className="border-t-2 border-black font-black text-sm">
+                      <tr className="border-t-2 border-black font-black text-xs sm:text-sm">
                         <td colSpan={2} className="py-3 uppercase">Total Tagihan</td>
-                        <td className="py-3 text-right text-emerald-600 font-mono text-base">Rp 55.500</td>
+                        <td className="py-3 text-right text-emerald-600 font-mono text-sm sm:text-base">Rp 55.500</td>
                       </tr>
                     </tfoot>
                   </table>
@@ -624,16 +624,16 @@ export default function InteractiveDemoShowcase() {
 
                 {/* Duitku Online Payment Simulator */}
                 {!invoicePaid ? (
-                  <div className="mt-4 p-4 bg-emerald-50 border-2 border-black space-y-3">
+                  <div className="mt-4 p-3.5 sm:p-4 bg-emerald-50 border-2 border-black space-y-3">
                     <div className="text-xs font-black uppercase text-slate-900">
-                      Pilih Metode Pembayaran Duitku Payment Gateway:
+                      Pilih Metode Pembayaran Duitku Gateway:
                     </div>
-                    <div className="flex flex-wrap gap-2">
-                      {["QRIS", "BCA Virtual Account", "Mandiri VA", "GoPay / OVO", "Bayar Tunai Kasir"].map((method) => (
+                    <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                      {["QRIS", "BCA VA", "Mandiri VA", "GoPay/OVO", "Tunai Kasir"].map((method) => (
                         <button
                           key={method}
                           onClick={() => setSelectedPaymentMethod(method)}
-                          className={`px-3 py-1.5 text-xs font-bold border-2 border-black transition-all ${
+                          className={`px-2.5 py-1 text-[11px] sm:text-xs font-bold border-2 border-black transition-all ${
                             selectedPaymentMethod === method
                               ? "bg-slate-900 text-white shadow-[2px_2px_0_0_#000]"
                               : "bg-white text-slate-800"
@@ -646,18 +646,18 @@ export default function InteractiveDemoShowcase() {
 
                     <button
                       onClick={() => setInvoicePaid(true)}
-                      className="w-full hm-btn-green py-2.5 text-xs flex items-center justify-center gap-2"
+                      className="w-full hm-btn-green py-2 text-xs flex items-center justify-center gap-2"
                     >
                       <QrCode className="w-4 h-4" />
                       <span>Simulasikan Bayar Lunas via {selectedPaymentMethod}</span>
                     </button>
                   </div>
                 ) : (
-                  <div className="mt-4 p-4 bg-emerald-100 border-2 border-black text-center space-y-2">
-                    <div className="text-sm font-black text-emerald-950 uppercase">
+                  <div className="mt-4 p-3.5 sm:p-4 bg-emerald-100 border-2 border-black text-center space-y-2">
+                    <div className="text-xs sm:text-sm font-black text-emerald-950 uppercase">
                       ✓ Pembayaran Berhasil Diverifikasi via Duitku ({selectedPaymentMethod})
                     </div>
-                    <p className="text-xs text-emerald-800">
+                    <p className="text-[11px] sm:text-xs text-emerald-800">
                       Struk digital dan kwitansi resmi telah otomatis dikirimkan ke WhatsApp warga.
                     </p>
                     <button
@@ -674,8 +674,8 @@ export default function InteractiveDemoShowcase() {
 
           {/* Tab 5: WhatsApp Automation Simulator */}
           {activeTab === "wa" && (
-            <div className="p-6 md:p-10 bg-slate-200 flex items-center justify-center">
-              <div className="w-full max-w-sm bg-[#e5ddd5] border-4 border-black rounded-[32px] shadow-[12px_12px_0_0_#000] overflow-hidden">
+            <div className="p-3 sm:p-6 md:p-10 bg-slate-200 flex items-center justify-center">
+              <div className="w-full max-w-[320px] sm:max-w-sm bg-[#e5ddd5] border-4 border-black rounded-[28px] sm:rounded-[32px] shadow-[6px_6px_0_0_#000] sm:shadow-[12px_12px_0_0_#000] overflow-hidden mx-auto">
                 {/* WhatsApp Chat Header */}
                 <div className="bg-[#075e54] text-white p-3.5 flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full bg-emerald-400 border border-black flex items-center justify-center text-black font-black text-sm">
