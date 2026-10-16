@@ -1,0 +1,39 @@
+/**
+ * JWT signing key.
+ *
+ * Di production: WAJIB ada di env (JWT_SECRET). Jika tidak ada, server menolak
+ * untuk berjalan — mencegah pemakaian secret yang bisa ditebak.
+ * Di development: dibuat acak per proses (sesi akan invalid saat restart).
+ */
+import { randomBytes } from "crypto";
+
+function loadJwtSecret(): string {
+  const fromEnv = process.env.JWT_SECRET?.trim();
+  if (fromEnv) return fromEnv;
+
+  // Saat next build (analisis halaman statis & prerendering), gunakan secret acak sementara
+  if (process.env.NEXT_PHASE === "phase-production-build") {
+    return `build-${randomBytes(48).toString("base64url")}`;
+  }
+
+  if (process.env.NODE_ENV === "production") {
+    throw new Error(
+      "JWT_SECRET belum diatur. Set JWT_SECRET di environment variables sebelum production."
+    );
+  }
+
+  // Dev-only: ephemeral random secret. Tambahkan JWT_SECRET di .env jika
+  // ingin sesi tetap valid antar restart.
+  return `dev-${randomBytes(48).toString("base64url")}`;
+}
+
+const SECRET_STRING = loadJwtSecret();
+
+/** String mentah JWT_SECRET. */
+export const JWT_SECRET_STRING = SECRET_STRING;
+export const JWT_SECRET = new TextEncoder().encode(SECRET_STRING);
+
+/**
+ * Nama cookie sesi standar (konsisten di dev & production, mencegah browser drop cookie __Host).
+ */
+export const COOKIE_NAME = "session";

@@ -1,0 +1,120 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+node_modules/
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# build apk output
+/dist/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# env files (can opt-in for committing if needed)
+.env*
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+/src/generated/prisma
+
+# local database (sqlite)
+/dev.db
+*.db-journal
+*.db-wal
+*.db-shm
+
+# server & app logs
+*.log
+/.server_log.txt
+
+# screenshot artifacts (root only)
+/invoice-page.png
+/landing-*.png
+/peta-*.png
+/splynx-dashboard.png
+
+# dev/debug artifacts (root only)
+/check.ts
+/check_img.py
+/convert_to_bmp.py
+/inject_svg.py
+/vectorize.py
+/replace-peta.js
+/skylite-dm.html
+/potrace/
+/potrace.zip
+.vercel
+/pi-dev/
+
+# AI IDE & tools
+.cursor/
+.gemini/
+.agents/
+.pi/
+.mcp.json
+MCP-SETUP.md
+scripts/mcp-probe.mjs
+scratch/
+/public/uploads
+
+# root ad-hoc scripts, tests & credential files
+/run_sql.js
+/test_*.js
+/test_*.ts
+/test-*.js
+/check_*.js
+/check_*.ts
+/check-*.js
+/get-envs*.js
+/set-vercel-*.js
+/fix-*.js
+/fix_*.js
+/patch_*.js
+/delete-*.js
+/delete-*.mjs
+/activate_all.js
+/fetch-events.js
+/clear-denda.ts
+/query_*.ts
+/generate_dashboard.py
+/modernize_ui.py
+/patch.js
+/replace.js
+/rewrite_popup.js
+/test.json
+/vercel_deps.json
+/*.py
+/chat*.txt
+*.bak
+/*.png
+/audit_*.md
+
+

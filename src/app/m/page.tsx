@@ -1,0 +1,425 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { todayLocalISO } from "@/lib/utils";
+import { 
+  MapPin, 
+  ClipboardList, 
+  Clock, 
+  Receipt, 
+  CheckCircle2, 
+  ChevronRight,
+  AlertTriangle,
+  MessageSquare,
+  Truck,
+  Bell,
+  Share2,
+  Copy,
+  Check,
+  Users
+} from "lucide-react";
+
+type Profil = {
+  id: number;
+  nama: string;
+  jabatan: string | null;
+  kelurahan: string | null;
+  aktif: boolean;
+};
+
+type StatusAbsen = { id: number; waktuMasuk: string | null; waktuSelesai: string | null; status: string } | null;
+
+type ReferralData = {
+  nama: string;
+  referralUrl: string;
+  stats: { totalSemua: number; totalAktif: number; totalCalon: number };
+  daftarTerbaru: { id: number; nama: string; alamat: string; status: string; createdAt: string }[];
+} | null;
+
+export default function MobileHome() {
+  const [profil, setProfil] = useState<Profil | null>(null);
+  const [absen, setAbsen] = useState<StatusAbsen>(null);
+  const [jumlahTugas, setJumlahTugas] = useState<number | null>(null);
+  const [jumlahCalon, setJumlahCalon] = useState<number | null>(null);
+  const [referralData, setReferralData] = useState<ReferralData>(null);
+  const [copiedRef, setCopiedRef] = useState(false);
+
+  useEffect(() => {
+    fetch("/api/petugas/me")
+      .then((r) => (r.ok ? r.json() : null))
+      .then(setProfil)
+      .catch(() => {});
+    fetch("/api/absensi")
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => setAbsen(d?.statusHariIni ?? null))
+      .catch(() => {});
+    fetch("/api/petugas/referral")
+      .then((r) => (r.ok ? r.json() : null))
+      .then(setReferralData)
+      .catch(() => {});
+  }, []);
+
+  const jabatan = (profil?.jabatan || "").split(",").filter(Boolean);
+  const isAngkut = jabatan.includes("angkut");
+  const isSurvei = jabatan.includes("survei");
+
+  useEffect(() => {
+    if (isAngkut) {
+      const today = todayLocalISO();
+      fetch(`/api/pengangkutan?saya=1&tanggal=${today}`)
+        .then((r) => (r.ok ? r.json() : []))
+        .then((d) => setJumlahTugas(Array.isArray(d) ? d.length : 0))
+        .catch(() => setJumlahTugas(0));
+    }
+    if (isSurvei) {
+      fetch("/api/pelanggan?status=calon")
+        .then((r) => (r.ok ? r.json() : []))
+        .then((d) => setJumlahCalon(Array.isArray(d) ? d.length : 0))
+        .catch(() => setJumlahCalon(0));
+    }
+  }, [isAngkut, isSurvei]);
+
+  const sudahMasuk = Boolean(absen?.waktuMasuk);
+  const sudahSelesai = Boolean(absen?.waktuSelesai);
+
+  function handleCopyReferral() {
+    if (!referralData?.referralUrl) return;
+    navigator.clipboard.writeText(referralData.referralUrl);
+    setCopiedRef(true);
+    setTimeout(() => setCopiedRef(false), 2500);
+  }
+
+  function handleShareWhatsApp() {
+    if (!referralData?.referralUrl) return;
+    const text = `Halo Bapak/Ibu! Yuk daftar layanan angkut & pengelolaan sampah resmi UPS HERU Kota Depok. Terjadwal, bersih, dan bisa pantau posisi armada langsung dari HP.\n\nKlik link pendaftaran resmi di sini:\n${referralData.referralUrl}`;
+    window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, "_blank");
+  }
+
+  return (
+    <div className="space-y-3">
+      {/* Attendance & Shift Card */}
+      <div className="bg-gradient-to-br from-emerald-800 to-emerald-950 text-white rounded-2xl p-3.5 shadow-sm border border-emerald-700/50">
+        <div className="flex items-center justify-between gap-2">
+          <div className="min-w-0">
+            <span className="text-[10px] font-semibold text-emerald-200 uppercase tracking-wider block">
+              Status Operasional
+            </span>
+            <div className="flex items-center gap-1.5 mt-0.5">
+              <span
+                className={`w-2 h-2 rounded-full shrink-0 ${
+                  sudahSelesai ? "bg-sky-400" : sudahMasuk ? "bg-emerald-400 animate-pulse" : "bg-amber-400"
+                }`}
+              />
+              <p className="text-sm font-bold text-white truncate">
+                {sudahSelesai ? "Shift Selesai" : sudahMasuk ? "Sedang Bertugas" : "Belum Absen Masuk"}
+              </p>
+            </div>
+            <p className="text-[10px] text-emerald-200/80 mt-0.5 truncate">
+              {profil?.kelurahan ? `Wilayah Kel. ${profil.kelurahan}` : "Armada Kota Depok"}
+            </p>
+          </div>
+
+          <Link
+            href="/m/absen"
+            className={`shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 ${
+              sudahSelesai
+                ? "bg-white/20 text-white hover:bg-white/30"
+                : sudahMasuk
+                ? "bg-amber-500 hover:bg-amber-600 text-slate-900"
+                : "bg-white text-emerald-900 hover:bg-emerald-50 active:scale-95"
+            }`}
+          >
+            {sudahSelesai ? (
+              <>
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-300" />
+                <span>Rekap</span>
+              </>
+            ) : sudahMasuk ? (
+              <>
+                <Clock className="w-3.5 h-3.5" />
+                <span>Akhiri Shift</span>
+              </>
+            ) : (
+              <>
+                <Clock className="w-3.5 h-3.5 text-emerald-700" />
+                <span>Mulai Shift</span>
+              </>
+            )}
+          </Link>
+        </div>
+      </div>
+
+      {/* Metrics Bar */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+        {isAngkut && (
+          <Link
+            href="/m/angkut"
+            className="bg-white border border-slate-200/80 rounded-xl p-2.5 shadow-sm hover:border-emerald-300 transition-all flex items-center gap-2.5"
+          >
+            <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0">
+              <Truck className="w-4 h-4" />
+            </div>
+            <div className="min-w-0">
+              <span className="text-[10px] font-medium text-slate-500 block truncate">Tugas Angkut</span>
+              <span className="text-base font-extrabold text-slate-900 tabular-nums">
+                {jumlahTugas !== null ? jumlahTugas : "-"}
+              </span>
+            </div>
+          </Link>
+        )}
+
+        {isSurvei && (
+          <Link
+            href="/m/survei"
+            className="bg-white border border-slate-200/80 rounded-xl p-2.5 shadow-sm hover:border-indigo-300 transition-all flex items-center gap-2.5"
+          >
+            <div className="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-700 flex items-center justify-center shrink-0">
+              <ClipboardList className="w-4 h-4" />
+            </div>
+            <div className="min-w-0">
+              <span className="text-[10px] font-medium text-slate-500 block truncate">Survei Calon</span>
+              <span className="text-base font-extrabold text-slate-900 tabular-nums">
+                {jumlahCalon !== null ? jumlahCalon : "-"}
+              </span>
+            </div>
+          </Link>
+        )}
+
+        <Link
+          href="/m/absen"
+          className="bg-white border border-slate-200/80 rounded-xl p-2.5 shadow-sm hover:border-sky-300 transition-all flex items-center gap-2.5"
+        >
+          <div className="w-8 h-8 rounded-lg bg-sky-50 text-sky-700 flex items-center justify-center shrink-0">
+            <Clock className="w-4 h-4" />
+          </div>
+          <div className="min-w-0">
+            <span className="text-[10px] font-medium text-slate-500 block truncate">Jam Masuk</span>
+            <span className="text-base font-extrabold text-slate-900 tabular-nums">
+              {sudahMasuk && absen?.waktuMasuk ? absen.waktuMasuk.slice(11, 16) : "--:--"}
+            </span>
+          </div>
+        </Link>
+      </div>
+
+      {/* Main Apps Menu (Grid 2 Columns) */}
+      <div className="space-y-1.5">
+        <p className="text-[11px] font-bold text-slate-600 uppercase tracking-wider px-1">
+          Menu Lapangan
+        </p>
+
+        <div className="grid grid-cols-2 gap-2">
+          {isAngkut && (
+            <Link
+              href="/m/angkut"
+              className="bg-white border border-slate-200/90 rounded-2xl p-3 shadow-sm hover:border-emerald-400 hover:shadow-sm active:scale-[0.98] transition-all flex flex-col justify-between h-[84px]"
+            >
+              <div className="flex items-center justify-between">
+                <div className="w-8 h-8 rounded-xl bg-emerald-700 text-white flex items-center justify-center shadow-sm">
+                  <MapPin className="w-4 h-4" />
+                </div>
+                <ChevronRight className="w-4 h-4 text-slate-300" />
+              </div>
+              <div>
+                <p className="text-xs font-bold text-slate-900 leading-tight">Tugas Angkut</p>
+                <p className="text-[10px] text-slate-500 truncate">Rute jemputan & radar</p>
+              </div>
+            </Link>
+          )}
+
+          {isAngkut && (
+            <Link
+              href="/m/lapor"
+              className="bg-white border border-slate-200/90 rounded-2xl p-3 shadow-sm hover:border-amber-400 hover:shadow-sm active:scale-[0.98] transition-all flex flex-col justify-between h-[84px]"
+            >
+              <div className="flex items-center justify-between">
+                <div className="w-8 h-8 rounded-xl bg-amber-500 text-white flex items-center justify-center shadow-sm">
+                  <AlertTriangle className="w-4 h-4" />
+                </div>
+                <ChevronRight className="w-4 h-4 text-slate-300" />
+              </div>
+              <div>
+                <p className="text-xs font-bold text-slate-900 leading-tight">Lapor Cepat</p>
+                <p className="text-[10px] text-slate-500 truncate">Catat jemputan & kendala</p>
+              </div>
+            </Link>
+          )}
+
+          {isSurvei && (
+            <Link
+              href="/m/survei"
+              className="bg-white border border-slate-200/90 rounded-2xl p-3 shadow-sm hover:border-indigo-400 hover:shadow-sm active:scale-[0.98] transition-all flex flex-col justify-between h-[84px]"
+            >
+              <div className="flex items-center justify-between">
+                <div className="w-8 h-8 rounded-xl bg-indigo-600 text-white flex items-center justify-center shadow-sm">
+                  <ClipboardList className="w-4 h-4" />
+                </div>
+                <ChevronRight className="w-4 h-4 text-slate-300" />
+              </div>
+              <div>
+                <p className="text-xs font-bold text-slate-900 leading-tight">Survei Warga</p>
+                <p className="text-[10px] text-slate-500 truncate">Verifikasi calon pelanggan</p>
+              </div>
+            </Link>
+          )}
+
+          <Link
+            href="/m/absen"
+            className="bg-white border border-slate-200/90 rounded-2xl p-3 shadow-sm hover:border-sky-400 hover:shadow-sm active:scale-[0.98] transition-all flex flex-col justify-between h-[84px]"
+          >
+            <div className="flex items-center justify-between">
+              <div className="w-8 h-8 rounded-xl bg-sky-600 text-white flex items-center justify-center shadow-sm">
+                <Clock className="w-4 h-4" />
+              </div>
+              <ChevronRight className="w-4 h-4 text-slate-300" />
+            </div>
+            <div>
+              <p className="text-xs font-bold text-slate-900 leading-tight">Presensi GPS</p>
+              <p className="text-[10px] text-slate-500 truncate">Jam masuk & pulang</p>
+            </div>
+          </Link>
+
+          <Link
+            href="/m/klaim"
+            className="bg-white border border-slate-200/90 rounded-2xl p-3 shadow-sm hover:border-rose-400 hover:shadow-sm active:scale-[0.98] transition-all flex flex-col justify-between h-[84px]"
+          >
+            <div className="flex items-center justify-between">
+              <div className="w-8 h-8 rounded-xl bg-rose-600 text-white flex items-center justify-center shadow-sm">
+                <Receipt className="w-4 h-4" />
+              </div>
+              <ChevronRight className="w-4 h-4 text-slate-300" />
+            </div>
+            <div>
+              <p className="text-xs font-bold text-slate-900 leading-tight">Klaim Biaya</p>
+              <p className="text-[10px] text-slate-500 truncate">BBM, servis, & kas</p>
+            </div>
+          </Link>
+
+          <Link
+            href="/m/chat"
+            className="bg-white border border-slate-200/90 rounded-2xl p-3 shadow-sm hover:border-violet-400 hover:shadow-sm active:scale-[0.98] transition-all flex flex-col justify-between h-[84px]"
+          >
+            <div className="flex items-center justify-between">
+              <div className="w-8 h-8 rounded-xl bg-violet-600 text-white flex items-center justify-center shadow-sm">
+                <MessageSquare className="w-4 h-4" />
+              </div>
+              <ChevronRight className="w-4 h-4 text-slate-300" />
+            </div>
+            <div>
+              <p className="text-xs font-bold text-slate-900 leading-tight">Chat Admin</p>
+              <p className="text-[10px] text-slate-500 truncate">Koordinasi & bantuan</p>
+            </div>
+          </Link>
+
+          <Link
+            href="/m/notifikasi"
+            className="bg-white border border-slate-200/90 rounded-2xl p-3 shadow-sm hover:border-amber-400 hover:shadow-md active:scale-[0.98] transition-all flex flex-col justify-between h-[84px]"
+          >
+            <div className="flex items-center justify-between">
+              <div className="w-8 h-8 rounded-xl bg-amber-600 text-white flex items-center justify-center shadow-sm">
+                <Bell className="w-4 h-4" />
+              </div>
+              <ChevronRight className="w-4 h-4 text-slate-300" />
+            </div>
+            <div>
+              <p className="text-xs font-bold text-slate-900 leading-tight">Notifikasi</p>
+              <p className="text-[10px] text-slate-500 truncate">Pengingat absen & tugas</p>
+            </div>
+          </Link>
+        </div>
+      </div>
+
+      {/* Referral Program Card for Officers */}
+      {referralData && (
+        <div className="bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800 text-white rounded-2xl p-3.5 shadow-md space-y-3">
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2 min-w-0">
+              <div className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center text-sm font-bold shrink-0">
+                🤝
+              </div>
+              <div className="min-w-0">
+                <h4 className="text-xs font-black text-white">Link Referral Saya</h4>
+                <p className="text-[10px] text-slate-400 truncate">
+                  Ajak warga baru mendaftar dengan akun Anda
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-1.5 shrink-0 bg-slate-800/90 px-2.5 py-1 rounded-xl border border-slate-700/80">
+              <Users className="w-3.5 h-3.5 text-emerald-400" />
+              <span className="text-[11px] font-mono font-black text-emerald-300">
+                {referralData.stats.totalSemua} Warga
+              </span>
+            </div>
+          </div>
+
+          <div className="bg-slate-950/80 rounded-xl p-2 border border-slate-800/80 flex items-center justify-between gap-2">
+            <span className="text-[10px] font-mono text-slate-300 truncate max-w-[200px] sm:max-w-xs">
+              {referralData.referralUrl}
+            </span>
+            <button
+              type="button"
+              onClick={handleCopyReferral}
+              className={`px-2.5 py-1 rounded-lg text-[10px] font-bold transition-all flex items-center gap-1 shrink-0 ${
+                copiedRef
+                  ? "bg-emerald-600 text-white shadow-xs"
+                  : "bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700"
+              }`}
+              title="Salin tautan referral"
+            >
+              {copiedRef ? <Check className="w-3 h-3 text-white" /> : <Copy className="w-3 h-3 text-slate-300" />}
+              <span>{copiedRef ? "Tersalin!" : "Salin"}</span>
+            </button>
+          </div>
+
+          <div className="flex items-center gap-2 pt-0.5">
+            <button
+              type="button"
+              onClick={handleShareWhatsApp}
+              className="w-full py-2 px-3 bg-[#00AA13] hover:bg-[#00880C] active:scale-95 text-white rounded-xl text-xs font-bold transition-all shadow-sm flex items-center justify-center gap-1.5"
+            >
+              <Share2 className="w-3.5 h-3.5" />
+              <span>Bagikan Link via WhatsApp</span>
+            </button>
+          </div>
+
+          {referralData.daftarTerbaru.length > 0 && (
+            <div className="pt-2 border-t border-slate-800/80 space-y-1">
+              <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">
+                Terakhir Mendaftar via Anda:
+              </span>
+              <div className="space-y-1 max-h-24 overflow-y-auto">
+                {referralData.daftarTerbaru.slice(0, 3).map((w) => (
+                  <div key={w.id} className="text-[10px] flex items-center justify-between py-0.5 px-1.5 rounded-lg bg-slate-900/60 border border-slate-800/60">
+                    <span className="font-bold text-slate-200 truncate max-w-[150px]">{w.nama}</span>
+                    <span className={`px-1.5 py-0.2 rounded text-[8px] font-extrabold ${
+                      w.status === "aktif" ? "bg-emerald-500/20 text-emerald-300" : "bg-amber-500/20 text-amber-300"
+                    }`}>
+                      {w.status === "aktif" ? "Aktif" : "Calon"}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Fast Helpdesk Banner */}
+      <div className="bg-slate-100 border border-slate-200/80 rounded-xl px-3 py-2 flex items-center justify-between gap-2">
+        <div className="flex items-center gap-2 min-w-0">
+          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping shrink-0" />
+          <p className="text-[10px] font-semibold text-slate-600 truncate">
+            GPS armada aktif terhubung ke Command Center
+          </p>
+        </div>
+        <Link
+          href="/m/chat"
+          className="text-[10px] font-bold text-emerald-700 hover:text-emerald-800 shrink-0"
+        >
+          Hubungi Admin →
+        </Link>
+      </div>
+    </div>
+  );
+}
